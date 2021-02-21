@@ -98,8 +98,6 @@ int main() {
   cin >> choice;
   cout << endl;
 
-  // Door & Car
-
   switch (choice)
   {
   case 1:
