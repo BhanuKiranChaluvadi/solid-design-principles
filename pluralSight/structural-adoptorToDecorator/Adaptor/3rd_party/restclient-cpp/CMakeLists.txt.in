@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(restclient-cpp-download NONE)
+
+include(ExternalProject)
+
+ExternalProject_Add(restclient-cpp
+  URL               https://github.com/mrtazz/restclient-cpp/archive/refs/tags/0.5.2.tar.gz
+  SOURCE_DIR        "${CMAKE_CURRENT_BINARY_DIR}/restclient-cpp-src"
+  BINARY_DIR        "${CMAKE_CURRENT_BINARY_DIR}/restclient-cpp-build"
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND     ""
+  INSTALL_COMMAND   ""
+  TEST_COMMAND      ""
+)

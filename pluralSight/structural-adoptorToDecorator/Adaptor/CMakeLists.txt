@@ -7,6 +7,8 @@ cmake_minimum_required(VERSION 3.5)
 # Set the project name
 project (adaptor)
 
+add_subdirectory(3rd_party/restclient-cpp)
+
 # Create a sources variable with a link to all cpp files to compile
 set(SOURCES
     src/main.cpp
