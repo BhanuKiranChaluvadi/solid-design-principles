@@ -15,7 +15,7 @@ set(SOURCES
     src/MovieDbRepository.cpp
     src/MovieDbRepository.cpp
     src/MovieManager.cpp
-#    src/TheMovieDbApi.cpp
+    src/TheMovieDbApi.cpp
 )
 
 # Add an executable with the above sources
@@ -26,4 +26,6 @@ add_executable(adaptor ${SOURCES})
 target_include_directories(adaptor
     PRIVATE 
         ${PROJECT_SOURCE_DIR}/include
+        ${restclient-cpp_SOURCE_DIR}/include
+        ${restclient-cpp_BINARY_DIR}/include
 )
