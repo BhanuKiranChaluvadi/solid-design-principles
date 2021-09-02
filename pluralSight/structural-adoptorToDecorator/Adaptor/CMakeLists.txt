@@ -29,3 +29,7 @@ target_include_directories(adaptor
         ${restclient-cpp_SOURCE_DIR}/include
         ${restclient-cpp_BINARY_DIR}/include
 )
+
+target_link_libraries(adaptor
+    restclient-cpp
+)   

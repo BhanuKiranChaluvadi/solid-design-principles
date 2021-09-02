@@ -11,10 +11,10 @@ public:
 };
 
 class TheMovieDbApi : public MovieApi   {
-    const std::string m_api_key;
+    const std::string m_api_key_;
 
 public:
-    TheMovieDbApi(std::string api_key) : m_api_key(std::move(api_key)) {}
+    TheMovieDbApi(std::string api_key) : m_api_key_(std::move(api_key)) {}
 
 
     std::string GetMovieDetails(const std::string& movie_id) const override;
