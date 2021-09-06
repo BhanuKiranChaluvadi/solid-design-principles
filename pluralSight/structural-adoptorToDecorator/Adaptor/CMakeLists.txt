@@ -8,10 +8,12 @@ cmake_minimum_required(VERSION 3.5)
 project (adaptor)
 
 add_subdirectory(3rd_party/restclient-cpp)
+add_subdirectory(3rd_party/rapidjson)
 
 # Create a sources variable with a link to all cpp files to compile
 set(SOURCES
     src/main.cpp
+    src/MovieApiAdaptor.cpp
     src/MovieDbRepository.cpp
     src/MovieDbRepository.cpp
     src/MovieManager.cpp
@@ -28,8 +30,12 @@ target_include_directories(adaptor
         ${PROJECT_SOURCE_DIR}/include
         ${restclient-cpp_SOURCE_DIR}/include
         ${restclient-cpp_BINARY_DIR}/include
+        ${RapidJSON_SOURCE_DIR}/include
+#         ${RapidJSON_INCLUDE_DIRS}
 )
+
 
 target_link_libraries(adaptor
     restclient-cpp
+    rapidjson
 )   
