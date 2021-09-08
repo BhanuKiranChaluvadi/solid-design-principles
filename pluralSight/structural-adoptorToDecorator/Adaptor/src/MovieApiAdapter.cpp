@@ -4,8 +4,10 @@
 #include "MovieApiAdapter.h"
 
 #include <memory>
-
+#include "api_key.h"
 #include "ErrorParsingMovieDataException.h"
+
+MovieApiAdapter::MovieApiAdapter(TheMovieDbApi api) : api_(api) {}
 
 std::shared_ptr<MovieData> MovieApiAdapter::GetById(const std::string& movie_id)
 {
