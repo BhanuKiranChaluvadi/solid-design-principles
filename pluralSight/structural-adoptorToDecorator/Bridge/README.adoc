@@ -1,0 +1,51 @@
+= Bridge Design Pattern
+:toc:
+:toc-placement!:
+
+toc::[]
+
+# When to Use the Bridge Pattern
+
+The Bridge design pattern is also known as handle/body. 
+It is a structural design pattern, and it was created to decouple the 
+abstraction form the implementation so that both can change independently. 
+The Bridge design pattern uses encapsulation, composition, and inheritance
+to make sure the different parts of our code can change independently. 
+In this case, the objective is also that the client code will not be 
+affected from any changes inside our code. Another reason that will require
+us to use the Bridge pattern is when we have multiple inheritance 
+hierarchies combined into a large number of classes. We duplicate all 
+similar code, and we want to be able to easily combine different aspects 
+inside our code into a new class without a huge overhead. Consider the 
+following example. We have a Shape base class with a pure virtual method to 
+draw that shape. Now let's imagine an application that has two different 
+shapes, a circle and a rectangle. Since we need to draw, in order to draw 
+our shapes on the screen we need to use a graphic library, let's say DirectX 
+for the sake of this example. And so we inherit the Circle class with one 
+that knows how to draw a circle using DirectX. And then when the requirement 
+we were expecting arrives to add OpenGL support, for example, then we inherit
+the Circle class again and this time implement the draw method using the new 
+graphic library. Obviously, we need to do the same for the Rectangle class as 
+well. We inherit it twice with two different implementations for the two 
+graphic libraries so we will be able to draw rectangles using the client's 
+graphic library of choice. But now we have a problem. With each new shape we 
+add to our system, we need to create at least two inheriting classes in order 
+to draw the shape using our supported environments. But there is even a bigger 
+issue here. What would happen if I need to add support for a third graphic 
+library, another way to draw shapes on the screen? Then I will need to create 
+derived classes for every single shape in the system and implement the new logic, 
+and that is a lot of effort which I prefer to avoid. As you can see in this 
+example, a shape has two different aspects, the shape parameters such as radius 
+or height or width, and what technology I use to draw the shape on the screen. 
+Every time I encounter this kind of duplicate inheritance, two or more aspects 
+for each class, I try to convert this structure to the Bridge pattern. In the 
+Bridge pattern, we split the logic path of the Shape and the classes that inherit 
+it, such as Circle and Rectangle, and use Composition instead of inheritance to 
+create four different implementations. In this case, the Shape class has a member 
+of a new type, DrawApi, which enables me to draw a shape using some form of vectors 
+or points in a 2D space. Now, each shape can call that API regardless of the 
+underlying technology, providing information on how to draw that specific shape. 
+The DrawApi will then be implemented using the two graphic libraries we need to 
+support, and if we need to add a third graphic library, all we need to do is 
+implement the same general‑purpose functions that the shapes themselves will use. 
+    Let's discuss how we can use the Bridge pattern to save and show movie metadata.
