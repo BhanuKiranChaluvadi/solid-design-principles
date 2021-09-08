@@ -1,0 +1,8 @@
+[source,bash]
+----
+Adaptor$ mkdir build
+
+Adaptor$ cd build/
+
+Adaptor/build$ make ..
+----

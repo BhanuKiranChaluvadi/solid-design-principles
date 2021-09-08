@@ -14,6 +14,7 @@ set(SOURCES
     src/main.cpp
     src/MovieApiAdapter.cpp
     src/MovieApiAdapter2.cpp
+    src/MovieApiAdapter3.cpp
     src/MovieDbRepository.cpp
     src/MovieDbRepository.cpp
     src/MovieManager.cpp
