@@ -9,9 +9,12 @@ ExternalProject_Add(rapidjson
   SOURCE_DIR        "${CMAKE_CURRENT_BINARY_DIR}/rapidjson-src"
   BINARY_DIR        "${CMAKE_CURRENT_BINARY_DIR}/rapidjson-build"
   TIMEOUT           10
-  CMAKE_ARGS        -DRAPIDJSON_BUILD_TESTS=OFF
+  CMAKE_ARGS        -DCMAKE_BUILD_TYPE=Release
                     -DRAPIDJSON_BUILD_DOC=OFF
-                    -DRAPIDJSON_BUILD_DOC=OFF
+                    -DRAPIDJSON_BUILD_EXAMPLES=OFF 
+                    -DRAPIDJSON_BUILD_TESTS=OFF
+                    -DRAPIDJSON_BUILD_CXX17=ON
+                    -DRAPIDJSON_HAS_STDSTRING=ON
   CONFIGURE_COMMAND ""
   BUILD_COMMAND     ""
   INSTALL_COMMAND   ""
