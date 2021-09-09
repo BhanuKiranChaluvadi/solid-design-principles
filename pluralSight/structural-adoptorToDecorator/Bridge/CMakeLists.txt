@@ -17,5 +17,6 @@ add_executable(bridge ${SOURCES})
 target_include_directories(bridge
     PRIVATE 
         ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/3rd_party
 )
  
