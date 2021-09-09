@@ -6,7 +6,7 @@ class MyClass::Impl
     std::string name_;
 
 public:
-    Impl(std::string name) :name_(std::move(name)) {}
+    Impl(std::string name) : name_(std::move(name)) {}
 
     void function1()
     {
@@ -18,9 +18,11 @@ public:
     }
 };
 
-MyClass::MyClass(std::string name) : pImpl(std::make_unique<Impl>(name)) {}
+MyClass::MyClass(std::string name) : pImpl(new Impl(name)) {}
 
-MyClass::~MyClass() {}
+MyClass::~MyClass() {
+    delete pImpl;
+}
 
 void MyClass::function1()
 {

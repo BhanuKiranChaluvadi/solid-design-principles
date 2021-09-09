@@ -5,7 +5,7 @@
 class MyClass
 {
     class Impl;
-    std::unique_ptr<Impl> pImpl;
+    Impl* pImpl;
 
 public:
     MyClass(std::string name);
