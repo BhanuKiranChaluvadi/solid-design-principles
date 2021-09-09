@@ -4,8 +4,6 @@
 #include <string>
 class MyClass
 {
-    std::string name_;
-
     class Impl;
     std::unique_ptr<Impl> pImpl;
 
