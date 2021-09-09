@@ -1,0 +1,40 @@
+= Pimpl Design 
+:toc:
+:toc-placement!:
+
+toc::[]
+
+# Full Form
+
+pointer to implementation
+
+# Relation with Bridge Pattern
+
+It's similar to the bridge pattern in a way that the client does not need to 
+change when the underlying implementation is changed, and on top of that, we 
+can also subclass the Impl class and create different implementations for it 
+to use just like in bridge, in fact, this is the bridge pattern with the added 
+benefit of not requiring the client to rebuild so the impl idiom split 
+implementation from the abstruction in order to make the client simpler to use 
+in order for you to be able to change the underlying behavior without the client 
+noticing.
+
+# Advantages
+
+The PImpl idiom is used to speed up compilation by separating the interface 
+of the class from its implementation. We do that to reduce build dependencies 
+and compile time.  The client's code only compiles using the original class 
+so any change to the Impl class would not cause the client to recompile, and 
+in huge code bases, this is a big time saver, but there is more to PImpl idiom 
+than just reducing compilation times
+
+# When to pass data directly into Pimpl class
+
+Choosing between passing the original class or just moving the class fields 
+depends on your preferences, the number of existing fields, and your design 
+considerations. The benefit of having all of the fields in the Impl class is 
+that the client is not aware of the internal structure of our code and we can 
+make changes to how data is stored without recompiling the client or changing 
+the binary structure of the original class. On the other hand, if you add an 
+impl to an existing class with a lot of fields, you might decide to keep its 
+members to avoid recompiling the client or making a lot of code changes.

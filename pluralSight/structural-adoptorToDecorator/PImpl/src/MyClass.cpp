@@ -6,7 +6,7 @@ class MyClass::Impl
     std::string name_;
 
 public:
-    Impl(std::string name) :name_(name) {}
+    Impl(std::string name) :name_(std::move(name)) {}
 
     void function1()
     {
