@@ -9,7 +9,8 @@ int main()
     MovieData movie3("3", "See paint dry", 1440);
     MovieData movie4("4", "Periodic drama", 180);
 
-    MovieSerializer *serializer = new MovieSerializer();
+    // MovieSerializer *serializer = new ConsoleMovieSerializer();
+    MovieSerializer *serializer = new FileMovieSerializer("./");
 
     serializer->WriteMovieDetails(movie1);
     serializer->WriteMovieDetails(movie2);
