@@ -11,7 +11,11 @@ int main()
 
     // MovieSerializer *serializer = new ConsoleMovieSerializer();
     // MovieSerializer *serializer = new FileMovieSerializer("./");
-    MovieSerializer *serializer = new JsonConsoleMovieSerializer();
+    // MovieSerializer *serializer = new JsonConsoleMovieSerializer();
+
+    JsonEncoder encoder;
+    // auto serializer = new ConsoleMovieSerializer(encoder);
+    auto serializer = new FileMovieSerializer(encoder, "./");
 
     serializer->WriteMovieDetails(movie1);
     serializer->WriteMovieDetails(movie2);

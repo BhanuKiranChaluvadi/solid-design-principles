@@ -6,77 +6,49 @@
 #include <sstream>
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
+#include "Encoder.h"
 
 class MovieSerializer
 {
+    Encoder &encoder_;
+
+protected:
+    virtual void saveDetails(const MovieData &movie_data, const std::string data) = 0;
+
 public:
+    MovieSerializer(Encoder &encoder) : encoder_(encoder) {}
     virtual ~MovieSerializer() = default;
-    virtual void WriteMovieDetails(const MovieData &movie_data) = 0;
+    virtual void WriteMovieDetails(const MovieData &movie_data)
+    {
+        const auto encoded_string = encoder_.encode(movie_data);
+        saveDetails(movie_data, encoded_string);
+    }
 };
 
 class ConsoleMovieSerializer : public MovieSerializer
 {
+
 protected:
-    virtual std::string GetMovieDataAsText(const MovieData &movie_data)
+    void saveDetails(const MovieData &movie_data, const std::string data) override
     {
-        std::stringstream sstream;
-        sstream << "Id: " << movie_data.GetImdbId() << std::endl;
-        sstream << "Title: " << movie_data.GetTitle() << std::endl;
-        sstream << "Length: " << movie_data.GetLengthMin() << std::endl
-                << std::endl;
-        return sstream.str();
+        std::cout << data;
     }
 
 public:
-    void WriteMovieDetails(const MovieData &movie_data) override
-    {
-        std::cout << GetMovieDataAsText(movie_data);
-    }
-};
-
-class JsonConsoleMovieSerializer : public ConsoleMovieSerializer
-{
-protected:
-    virtual std::string GetMovieDataAsText(const MovieData &movie_data)
-    {
-        rapidjson::StringBuffer string_buffer;
-        rapidjson::Writer<rapidjson::StringBuffer> writer(string_buffer);
-        writer.StartObject();
-        writer.Key("Id");
-        writer.String(movie_data.GetImdbId().c_str());
-
-        writer.Key("Title");
-        writer.String(movie_data.GetTitle().c_str());
-
-        writer.Key("Length");
-        writer.Uint(movie_data.GetLengthMin());
-
-        writer.EndObject();
-
-        return string_buffer.GetString();
-    }
-
-public:
-    void WriteMovieDetails(const MovieData &movie_data) override
-    {
-        std::cout << GetMovieDataAsText(movie_data);
-    }
+    ConsoleMovieSerializer(Encoder &encoder) : MovieSerializer(encoder) {}
 };
 
 class FileMovieSerializer : public MovieSerializer
 {
     std::string root_dir_;
 
-public:
-    FileMovieSerializer(std::string root_dir) : root_dir_(std::move(root_dir_)) {}
-
-    void WriteMovieDetails(const MovieData &movie_data) override
+protected:
+    void saveDetails(const MovieData &movie_data, const std::string data) override
     {
         std::ofstream output(root_dir_ + "movie_" + movie_data.GetImdbId() + ".txt");
-
-        output << "Id: " << movie_data.GetImdbId() << std::endl;
-        output << "Title: " << movie_data.GetTitle() << std::endl;
-        output << "Length: " << movie_data.GetLengthMin() << std::endl
-               << std::endl;
+        output << data;
     }
+
+public:
+    FileMovieSerializer(Encoder &encoder, std::string root_dir) : MovieSerializer(encoder), root_dir_(std::move(root_dir_)) {}
 };
