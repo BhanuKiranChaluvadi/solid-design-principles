@@ -10,11 +10,11 @@ set(SOURCES
 )
 
 # Add an executable with the above sources
-add_executable(adapter ${SOURCES})
+add_executable(bridge ${SOURCES})
 
 # Set the directories that should be included in the build command for this target
 # when running g++ these will be included as -I/directory/path/
-target_include_directories(adapter
+target_include_directories(bridge
     PRIVATE 
         ${PROJECT_SOURCE_DIR}/include
 )
