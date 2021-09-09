@@ -1,13 +1,16 @@
 #pragma once
 
 #include <memory>
+#include <string>
+class MyClass
+{
+    std::string name_;
 
-class MyClass {
     class Impl;
     std::unique_ptr<Impl> pImpl;
 
 public:
-    MyClass();
+    MyClass(std::string name);
     ~MyClass();
     void function1();
     void function2();

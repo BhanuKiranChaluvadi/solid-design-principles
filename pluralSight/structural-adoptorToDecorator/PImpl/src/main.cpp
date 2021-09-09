@@ -2,7 +2,7 @@
 
 int main() {
 
-    MyClass myClass;
+    MyClass myClass("this is my class");
     myClass.function1();
     myClass.function2();
 
