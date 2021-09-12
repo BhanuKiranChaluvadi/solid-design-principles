@@ -1,0 +1,7 @@
+= Decorator Design Pattern
+:toc:
+:toc-placement!:
+
+toc::[]
+
+# When to Use the Decorator Pattern
