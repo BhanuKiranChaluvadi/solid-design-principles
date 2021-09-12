@@ -21,7 +21,18 @@ public:
     unsigned GetLengthMin() const { return length_; }
     unsigned GetScore() const { return score_; }
 
-    unsigned GetTotalWatchingTime() const override {
+    unsigned GetTotalWatchingTime() const override
+    {
         return length_;
+    }
+
+    unsigned GetHighestScore() const override
+    {
+        return score_;
+    }
+
+    const MovieData *GetMovieWithHighestScore() const override
+    {
+        return this;
     }
 };

@@ -32,4 +32,37 @@ public:
         }
         return total_watching_time;
     }
+
+    unsigned GetHighestScore() const override
+    {
+        unsigned highest_score = 0;
+        for (auto movie_info : movies_info_)
+        {
+            unsigned score = movie_info->GetHighestScore();
+            if (score > highest_score)
+            {
+                highest_score = score;
+            }
+        }
+        return highest_score;
+    }
+
+    const MovieData *GetMovieWithHighestScore() const override
+    {
+        const MovieData *current_highest = nullptr;
+        unsigned highest_score = 0;
+
+        for (auto movie_info : movies_info_)
+        {
+            const auto temp_highest = movie_info->GetMovieWithHighestScore();
+            if (temp_highest != nullptr)
+            {
+                if (current_highest == nullptr || current_highest->GetScore() < temp_highest->GetScore())
+                {
+                    current_highest = temp_highest;
+                }
+            }
+        }
+        return current_highest;
+    }
 };

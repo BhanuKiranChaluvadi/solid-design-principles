@@ -24,8 +24,14 @@ int main()
 	martial_arts_movies.Add(movie_4);
 	martial_arts_movies.Add(movie_5);
 
-	unsigned total_watching_time = action_movies.GetTotalWatchingTime();	
-
+	unsigned total_watching_time = action_movies.GetTotalWatchingTime();
 	std::cout << "Total watching time: " << total_watching_time << std::endl;
+
+	unsigned highest_score = action_movies.GetHighestScore();
+	std::cout << "Highest score: " << highest_score << std::endl;
+
+	const MovieData* highest_movie_data = action_movies.GetMovieWithHighestScore();
+	std::cout << "Highest score: " << highest_movie_data->GetScore() << std::endl;
+
 	return 0;
 }
