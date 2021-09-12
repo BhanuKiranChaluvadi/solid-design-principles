@@ -37,5 +37,109 @@ But that requires to handle both movies and the groups separately.
 # Idea
 What if i treat Movie/MovieData and MovieGroup similarly
 
+## Demo : Movie Group
+
+In this demo, we will continue to use the MovieData class. I've added a new field
+to that class to store the movie score from 1 to 10. Other than that, it has 
+mostly remained the same and contain the movie title and the length of that movie 
+in minutes, just like in the previous module. I have created a new class called 
+MovieGroup that will group several related movies. It has a title that describes 
+that group and two child collections, one for all the movies inside that group and 
+one with all the subgroups of that specific group. Using those two collections, 
+I can represent a hierarchy of movies and groups in a flexible way. The MovieGroup 
+class has methods to add and remove subgroups, and the method to get all of the 
+subgroups in that specific MovieGroup. It also has similar methods to add and remove 
+movies to that group and get the group movie list. Looking at these class methods, 
+we can see there's some repetition here in the methods name, two Add methods, 
+two Remove methods, and two Get methods. It's not exactly code duplication, but it 
+looks like we can improve this design. Don't worry, we'll fix that later using the 
+Composite pattern. As always, the main method in this project represents the client 
+code that will use MovieData and MovieGroup object. I have created a data structure 
+that represents a list of movies grouped by genre. The root object is action_movies. 
+It is a MovieGroup containing all of the action movies in my system. I have two 
+subgroups, one for military_action_movies and one for martial_arts_movies. Both 
+subgroups are added to the action_movie group. Next I've created five different 
+movies with their length in minutes and their score. And finally, I have added each 
+movie to the groups it belonged to. If I had to draw the tree diagram of this specific 
+data structure, I would have drawn Action movies group as the root with three movies 
+directly under it, then create a subgroup called Military Action that contains one 
+movie and another subgroup called Martial Arts that contains two movies. The first 
+feature I want to implement is the ability to get a total time of all the movies in my 
+application. I want to traverse the tree and add the movie length in each MovieGroup. 
+For that, I will create a method in the clients code called GetTotalWatchingTime that 
+will receive a list of movies and return the sum of the time of each movie in that list. 
+Implementing this method is straightforward. Create a counter and iterate over the movie
+list and add each movie length to that counter. Since my system also has subgroups in 
+each group, I will need to create another method to sum the subgroups' total time in the 
+client code as well. The second method is similar to the previous method, only this time 
+I have a list of MovieGroups passed to the method as a parameter. I will literate over 
+the MovieGroup list, and with each new group I will call the same method for each of its 
+subgroups and add a call to the first method for the movies inside that group. As you 
+can see, my solution is to recursively traverse the tree and collect all the movie data 
+I find along the way. It is not a bad solution, but I don't like the fact I need two 
+methods, one to handle movies and one to handle subgroups, and I usually don't like adding
+such logic to the color of my code, because it means that extending this solution with a 
+new type of item or a new type of group would force me to update the client code as well.
+Going back to the main method, I can add two calls to collect the total length of all the 
+action movies by calling the first method to sum the length of the movies in the 
+action_movie group. And then add another call to sum the length of all the movies in the 
+action_movie subgroups. I could probably improve this implementation, use one method and 
+not two, but as you probably already know, I have a better solution coming up. Let's print 
+the Total watching time to the screen to see that my code works. I'll build and run the 
+application, and as you can see, I got the total watching time of all the movies inside 
+the Action group, and it's 516 minutes. Now we can refactor all the code using the 
+Composite pattern. First I will create a new base class called MovieInfo. This class will
+be a uniform interface I will use to hide the tree‑related operations from the client. 
+I will add a pure virtual method called GetTotalWatchingTime, which will return the movie 
+or movies total length. Going back to MovieData class, we will add inheritance to the new 
+movie base class, then implement GetTotalWatchingTime method. In case of MovieData, a 
+single movie, the implementation is quite simple, just return the movie's length. Now 
+let's go to the MovieGroup class and inherit MovieInfo as well. Now that both MovieData 
+and MovieGroup inherit MovieInfo, I can merge the two child collections into one collection
+containing MovieInfo objects. This also means I can update the Add and Remove methods so 
+that they will add or remove MovieInfo objects instead of MovieGroup or MovieData. And once
+I do that, I can delete the rest of the methods inside this class, as they are no longer 
+needed. The last thing we need to do is implement GetTotalWatchingTime. The implementation 
+is like the code we have written in the client, create a variable to store the total movie 
+length and iterate over the child objects and sum their total length. The big change from 
+the original method is now we can do that using a single collection of MovieInfo items, 
+which holds both movies and subgroups. And that's it. We are finished implementing the 
+Composite pattern in our code. We can head back to the clients code, or our main method 
+if you prefer to call it that way, and here we can delete the two methods that are no longer
+needed. Then update the initialization code to use Add instead of AddSubgroup and AddMovie 
+methods. The rest of the initialization code remains exactly the same. And finally, we can 
+replace the clients method with a new GetTotalWatchingTime method inside action_movies 
+instance. Running the code, we can see that we have received the same result, only this time 
+with less code than we had before. Let's add a new functionality to our application, find the
+movie with the highest score. First, in the MovieInfo class we will add a new method that 
+returns the movie with the highest score. Since it would return a pointer to MovieData class,
+we will need to forward declare MovieData in this file. Next we will need to implement this 
+method in MovieGroup and MovieData classes. This time we'll start with the MovieGroup class. 
+I will create a variable to store the current movie with the highest score and initialize it 
+with a null pointer. Next, iterate over the child objects of this instance and call the same 
+method on each object. If the result I got is not a null pointer, which would happen if a 
+subgroup does not have any movies, then I will check if the score of this item is higher 
+than the score of the current_highest score MovieData. If it is, set the new MovieData as the
+current movie with the highest score. And finally, after finishing iterating over all of the 
+items, return that MovieData. Having finished implementing the new functionality inside the 
+MovieGroup class, now we can do the same in the MovieData class. I will create a new method 
+inside MovieData, but this time the code is quite simple. Just return this instance as the 
+movie with the highest score, and that's it. In the main method, we will add the call to the 
+new function and then write the result on the screen. Running the code, we can see that we 
+got the movie with the highest score, and that movie's score is 9 in this case. One last 
+thing we need to know about the Composite pattern is that it's not always this simple. 
+Right now, adding and removing items is implemented only in the MovieGroup class. We were 
+able to do that because the code that initialized the system knows which types are used. 
+This is not always the case. In many Composite implementations, we would have needed to 
+define the Add and Remove methods in the base class level, like so. I agree it's not logical 
+for the MovieData class to be able to add or remove movies, and so what I would usually do 
+is create a default or empty implementation for those methods so that only the classes that 
+need to perform those operations can override them and add their implementation. In some 
+cases in the Composite pattern, you would have needed other operations that are only 
+logical for some of your classes, and then you would need to define them in the base class 
+and create similar empty implementations so that you will only need to implement them in 
+the classes that are needed and not in all of the classes in your system.
+
+
 
 
