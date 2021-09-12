@@ -1,0 +1,36 @@
+= Composite Design Pattern
+:toc:
+:toc-placement!:
+
+toc::[]
+
+# Client code
+
+Clients code, or our main method
+
+# Alternative before writing MovieInfo class
+
+## Alternate 1
+In client/main code , we can make a 
+[source, c]
+----
+	std::list<MovieGroup *> groups_;
+	groups_.push_back(&action_movies);
+	unsigned total_watching_time = getTotalWatchingTime(groups_);
+----
+then we don´t need to add two lines in the code But two functions of getTotalWatchingTime still exsists.
+But in the future we need to find the size In future then we need to add two more functions.
+with function logic.
+
+## Alternate 2
+We can combine both functions into one function and has MovieGroup as argument
+[source, c]
+----
+	unsigned getTotalWatchingTime(const std::list<MovieData *> &movies)
+    unsigned getTotalWatchingTime(const std::list<MovieGroup *> &groups)
+----
+
+## Alternate 3
+We can also movie the function - getTotalWatchingTime to the MovieGroup class.
+But that requires to handle both movies and the groups separately.
+
