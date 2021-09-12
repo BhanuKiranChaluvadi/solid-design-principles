@@ -1,12 +1,14 @@
 #include "OutputStream.h"
+#include "StreamDecorator.h"
 
 int main() {
 
     ConsoleStream stream;
+    EncryptedStreamDecorator encrypted(&stream, 'b');
 
-    stream.write("--------\n");
-    stream.write("Hello\n");
-    stream.write("--------\n");
+    std::cout << std::endl;
+    encrypted.write("Hello encrypted");
+    std::cout << std::endl;
 
     return 0;
 }
