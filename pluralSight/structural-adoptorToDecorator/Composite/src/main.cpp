@@ -27,11 +27,9 @@ int main()
 	unsigned total_watching_time = action_movies.GetTotalWatchingTime();
 	std::cout << "Total watching time: " << total_watching_time << std::endl;
 
-	unsigned highest_score = action_movies.GetHighestScore();
-	std::cout << "Highest score: " << highest_score << std::endl;
-
-	const MovieData* highest_movie_data = action_movies.GetMovieWithHighestScore();
-	std::cout << "Highest score: " << highest_movie_data->GetScore() << std::endl;
+	auto movie_with_highest_score = action_movies.GetMovieWithHighestScore();
+	std::cout << "The movie with the highest score is: " << movie_with_highest_score->GetTitle()
+			  << "score: " << movie_with_highest_score->GetScore() << std::endl;
 
 	return 0;
 }
