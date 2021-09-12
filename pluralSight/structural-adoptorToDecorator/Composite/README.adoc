@@ -34,3 +34,8 @@ We can combine both functions into one function and has MovieGroup as argument
 We can also movie the function - getTotalWatchingTime to the MovieGroup class.
 But that requires to handle both movies and the groups separately.
 
+# Idea
+What if i treat Movie/MovieData and MovieGroup similarly
+
+
+

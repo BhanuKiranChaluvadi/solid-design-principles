@@ -1,44 +1,35 @@
+#pragma once
+
 #include <string>
 #include <list>
 
 #include "MovieData.h"
 
-class MovieGroup
+class MovieGroup : public MovieInfo
 {
     std::string title_;
-    std::list<MovieGroup *> sub_groups_;
-    std::list<MovieData *> movies_;
+    std::list<MovieInfo *> movies_info_;
 
 public:
     MovieGroup(std::string title) : title_(std::move(title)) {}
 
-    void addSubGroup(MovieGroup &group)
+    void Add(MovieInfo &group)
     {
-        sub_groups_.push_back(&group);
+        movies_info_.push_back(&group);
     }
 
-    void removeSubGroup(MovieGroup &group)
+    void Remove(MovieInfo &group)
     {
-        sub_groups_.remove(&group);
+        movies_info_.remove(&group);
     }
 
-    std::list<MovieGroup *> getSubGroups() const
+    unsigned GetTotalWatchingTime() const override
     {
-        return sub_groups_;
-    }
-
-    void addMovie(MovieData &movie)
-    {
-        movies_.push_back(&movie);
-    }
-
-    void removeMovie(MovieData &movie)
-    {
-        movies_.remove(&movie);
-    }
-
-    std::list<MovieData *> getMovies() const
-    {
-        return movies_;
+        unsigned total_watching_time = 0;
+        for (auto movie_info : movies_info_)
+        {
+            total_watching_time += movie_info->GetTotalWatchingTime();
+        }
+        return total_watching_time;
     }
 };

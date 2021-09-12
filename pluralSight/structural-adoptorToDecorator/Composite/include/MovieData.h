@@ -1,9 +1,10 @@
 #pragma once
 
+#include "MovieInfo.h"
 #include <utility>
 #include <string>
 
-class MovieData
+class MovieData : public MovieInfo
 {
     std::string title_;
     unsigned length_;
@@ -19,4 +20,8 @@ public:
     std::string GetTitle() const { return title_; }
     unsigned GetLengthMin() const { return length_; }
     unsigned GetScore() const { return score_; }
+
+    unsigned GetTotalWatchingTime() const override {
+        return length_;
+    }
 };
